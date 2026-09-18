@@ -1,9 +1,7 @@
 ---
 const navLinks = [
   { href: '/', label: '首页' },
-  { href: '/projects', label: '作品集' },
-  { href: '/blog', label: '博客' },
-  { href: '/about', label: '关于' },
+  { href: 'https://github.com/DeveloperYe', label: 'GitHub', external: true },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -12,13 +10,13 @@ const isActive = (href: string) => {
   return currentPath.startsWith(href);
 };
 
-const siteName = 'Your Name';
+const siteName = 'DeveloperYe';
 ---
 
 <header class="site-header">
   <div class="container header-inner">
     <a href="/" class="logo">
-      <span class="logo-mark">P</span>
+      <span class="logo-mark">D</span>
       <span class="logo-text">{siteName}</span>
     </a>
 
@@ -26,6 +24,8 @@ const siteName = 'Your Name';
       {navLinks.map(link => (
         <a
           href={link.href}
+          target={link.external ? '_blank' : undefined}
+          rel={link.external ? 'noopener' : undefined}
           class:list={['nav-link', { active: isActive(link.href) }]}
         >
           {link.label}
@@ -64,6 +64,8 @@ const siteName = 'Your Name';
     {navLinks.map(link => (
       <a
         href={link.href}
+        target={link.external ? '_blank' : undefined}
+        rel={link.external ? 'noopener' : undefined}
         class:list={['nav-link-mobile', { active: isActive(link.href) }]}
       >
         {link.label}
