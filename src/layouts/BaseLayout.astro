@@ -12,11 +12,29 @@ export interface Props {
 const {
   title,
   description = '一个使用 Astro 构建的个人网站',
-  image = '/og-default.png',
+  image = '/og.jpg',
 } = Astro.props;
 
 const siteName = 'DeveloperYe';
 const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
+
+// SEO：规范化地址、分享图绝对链接、结构化数据
+const siteUrl = Astro.site ?? new URL('https://developerye.github.io');
+const canonical = new URL(Astro.url.pathname, siteUrl);
+const ogImage = new URL(image, siteUrl).href;
+
+const ld = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: siteName,
+  url: siteUrl.href,
+  description,
+  author: {
+    '@type': 'Person',
+    name: 'DeveloperYe',
+    url: 'https://github.com/DeveloperYe',
+  },
+});
 ---
 
 <!doctype html>
@@ -25,6 +43,7 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical.href} />
     <meta name="generator" content={Astro.generator} />
 
     <!-- SEO -->
@@ -35,12 +54,14 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
     <meta property="og:type" content="website" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={ogImage} />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     <!-- 主题初始化（防止闪烁） -->
     <script is:inline>
@@ -51,6 +72,7 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
       })();
       document.documentElement.setAttribute('data-theme', theme);
     </script>
+    <script type="application/ld+json" set:html={ld}></script>
   </head>
   <body>
     <Header />
