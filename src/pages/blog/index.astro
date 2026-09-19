@@ -1,0 +1,109 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const fmt = (d: Date) =>
+  new Date(d).toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<BaseLayout title="博客" description="DeveloperYe 的博客：技术笔记、折腾记录与随笔">
+  <section class="container page">
+    <h1>博客</h1>
+    <p class="lede">随手记下的技术笔记、折腾记录和杂谈。</p>
+
+    {posts.length === 0 ? (
+      <p class="empty">还没有文章，敬请期待。</p>
+    ) : (
+      <ul class="list">
+        {
+          posts.map((post) => (
+            <li class="post">
+              <span class="date">{fmt(post.data.pubDate)}</span>
+              <a class="link" href={`/blog/${post.id}/`}>{post.data.title}</a>
+              <p class="desc">{post.data.description}</p>
+              <div class="tags">
+                {post.data.tags.map((t) => <span class="tag">{t}</span>)}
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    )}
+  </section>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-top: 56px;
+    padding-bottom: 72px;
+  }
+
+  h1 {
+    margin: 0 0 8px;
+    font-size: 2rem;
+  }
+
+  .lede {
+    color: var(--text-secondary);
+    margin: 0 0 32px;
+  }
+
+  .list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .post {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 24px;
+  }
+
+  .date {
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+  }
+
+  .link {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 6px 0 8px;
+  }
+
+  .link:hover {
+    color: var(--accent);
+  }
+
+  .desc {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin: 0 0 12px;
+  }
+
+  .tags {
+    display: flex;
+    gap: 8px;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+  }
+
+  .empty {
+    color: var(--text-tertiary);
+  }
+</style>
