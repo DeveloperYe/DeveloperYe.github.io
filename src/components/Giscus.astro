@@ -1,0 +1,57 @@
+---
+// Giscus 评论区组件：评论基于仓库 Discussions，访客用 GitHub 登录后留言
+// 主题跟随站点 light/dark 切换
+---
+<section class="comments">
+  <h2 class="comments-title">评论区</h2>
+  <div class="comments-box">
+    <script
+      src="https://giscus.app/client.js"
+      data-repo="DeveloperYe/DeveloperYe.github.io"
+      data-repo-id="R_kgDOUf6P0Q"
+      data-category="General"
+      data-category-id="DIC_kwDOUf6P0c4DF7k8"
+      data-mapping="pathname"
+      data-strict="0"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="bottom"
+      data-theme="light"
+      data-lang="zh-CN"
+      crossorigin="anonymous"
+      async
+    ></script>
+
+    <script is:inline>
+      // 让评论主题跟着站点深浅色切换走
+      const syncGiscus = () => {
+        const theme =
+          document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+        // @ts-ignore
+        if (typeof window.setGiscusTheme === 'function') window.setGiscusTheme(theme);
+      };
+      new MutationObserver(syncGiscus).observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme'],
+      });
+      window.addEventListener('giscus-loaded', syncGiscus);
+    </script>
+  </div>
+</section>
+
+<style>
+  .comments {
+    margin-top: 56px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+  }
+
+  .comments-title {
+    font-size: 1.2rem;
+    margin: 0 0 8px;
+  }
+
+  .comments-box {
+    min-height: 120px;
+  }
+</style>
