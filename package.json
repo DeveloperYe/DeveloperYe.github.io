@@ -1,5 +1,5 @@
 {
-  "name": "my-personal-website",
+  "name": "developerye-site",
   "type": "module",
   "version": "1.0.0",
   "private": true,
@@ -15,3 +15,4 @@
     "astro": "^5.0.0"
   }
 }
+
