@@ -1,53 +1,190 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const projects = [
+const groups = [
   {
-    title: '图片压缩器',
-    desc: '纯前端图片压缩工具：批量 / 直链 / ZIP 解压，可自定义目标体积上限，浏览器本地完成，不上传服务器。',
-    repo: 'https://github.com/DeveloperYe/img500k',
-    url: 'https://developerye.github.io/img500k/',
-    tag: '前端工具',
+    name: '模型网关',
+    note: '把各家客户端与平台的私有通道，转成 OpenAI 兼容接口',
+    items: [
+      {
+        title: 'traeplugin2api',
+        tag: '自建',
+        desc: '把 Trae / MarsCode 客户端通道反代成 OpenAI 兼容接口的网关：流式 SSE、工具调用、中文管理面板，自带运行时自愈与提示词热重载。',
+        repo: 'https://github.com/DeveloperYe/traeplugin2api',
+      },
+      {
+        title: 'polymas2api',
+        tag: '自建',
+        desc: 'polymas（智慧树）AI 助教的 OpenAI 兼容网关：纯标准库、SSE 流式、工具桥接、多账号池，附带可运维的控制台面板。',
+        repo: 'https://github.com/DeveloperYe/polymas2api',
+      },
+      {
+        title: 'Zcode2Api',
+        tag: 'fork 增强',
+        desc: 'Z.AI ZCode 的 OpenAI / Anthropic 兼容代理（Go）：JWT 账号池、自动故障转移、行为风控；在原项目基础上补了本地安全修复。',
+        repo: 'https://github.com/DeveloperYe/Zcode2Api',
+      },
+    ],
   },
   {
-    title: 'DeveloperYe.github.io',
-    desc: '用 Astro 搭建、GitHub Actions 自动部署的纯静态个人主页，支持亮 / 暗主题切换。',
-    repo: 'https://github.com/DeveloperYe/DeveloperYe.github.io',
-    url: 'https://developerye.github.io',
-    tag: 'Astro',
+    name: 'DSH 生态',
+    note: '围绕 DeepSeekRuntime 的插件、客户端与扩展',
+    items: [
+      {
+        title: 'dsh-local-files',
+        tag: '插件',
+        desc: '给 DSH Web 补上本机文件管理：浏览、预览、下载、上传、编辑、重命名，复用 3080 端口与现有密码门。',
+        repo: 'https://github.com/DeveloperYe/dsh-local-files',
+      },
+      {
+        title: 'dsh-doyourweb-remote',
+        tag: '插件',
+        desc: '远程浏览器控制：MV3 扩展 TLS 外拨，让 DSH 直接读和操作另一台机器上的 Chrome / Edge，含预配对扩展与远程诊断。',
+        repo: 'https://github.com/DeveloperYe/dsh-doyourweb-remote',
+      },
+      {
+        title: 'dsh-mobile-client',
+        tag: 'Android',
+        desc: 'DSH 的 Android 客户端：单 Activity + WebView 外壳，界面资源全部打进 APK，打开即用，CI 自动出包。',
+        repo: 'https://github.com/DeveloperYe/dsh-mobile-client',
+        url: 'https://github.com/DeveloperYe/dsh-mobile-client/releases/latest',
+        urlLabel: '下载 APK',
+      },
+      {
+        title: 'dsh-bili-scroll',
+        tag: 'fork 定制',
+        desc: '每天替你刷一轮 B 站：读字幕挑出值得看的，写一份日报，值得的内容 @ 你。',
+        repo: 'https://github.com/DeveloperYe/dsh-bili-scroll',
+      },
+      {
+        title: 'awesome-dsh-plugin',
+        tag: '清单',
+        desc: 'DSH 插件精选列表：插件以 YAML 条目提 PR，合并后进入双语 README 与站点。',
+        repo: 'https://github.com/DeveloperYe/awesome-dsh-plugin',
+      },
+    ],
   },
   {
-    title: 'handwriting-homework-pipeline',
-    desc: '可复用 Agent Skills 套件：把「马原答题 → 生成 Word → 转手写稿 zip」串成一条流水线，含答题与手写生成两个子 skill。',
-    repo: 'https://github.com/DeveloperYe/handwriting-homework-pipeline',
-    url: 'https://github.com/DeveloperYe/handwriting-homework-pipeline',
-    tag: 'Agent Skills',
+    name: '离线地图',
+    note: '给移动端用的离线矢量底图数据',
+    items: [
+      {
+        title: 'china-offline-basemaps',
+        tag: '数据',
+        desc: '中国 370 个行政区单元的离线矢量瓦片包（Protomaps PMTiles，z0–15）：每城一个 Release，附切包流水线与城市索引。',
+        repo: 'https://github.com/DeveloperYe/china-offline-basemaps',
+      },
+    ],
+  },
+  {
+    name: 'Android 与小游戏',
+    note: '能装到手机上的东西',
+    items: [
+      {
+        title: 'sport-health-app',
+        tag: 'App',
+        desc: '运动健康 App：计步、健康环、喝水提醒、运动记录，支持离线底图；GitHub Actions 出 APK。',
+        repo: 'https://github.com/DeveloperYe/sport-health-app',
+        url: 'https://github.com/DeveloperYe/sport-health-app/releases/latest',
+        urlLabel: '下载 APK',
+      },
+      {
+        title: 'BongoCatDroid',
+        tag: 'App',
+        desc: 'Android 桌宠：键盘敲击时跟着动的 Bongo Cat。',
+        repo: 'https://github.com/DeveloperYe/BongoCatDroid',
+      },
+      {
+        title: 'valorant-spike-3d',
+        tag: '游戏',
+        desc: '3D 拆弹 / 引爆小游戏，浏览器里直接玩，另带 Android 外壳。',
+        repo: 'https://github.com/DeveloperYe/valorant-spike-3d',
+        url: 'https://developerye.github.io/valorant-spike-3d/',
+        urlLabel: '在线试玩',
+      },
+    ],
+  },
+  {
+    name: 'Web 工具与站点',
+    note: '纯前端的小工具，以及站本身',
+    items: [
+      {
+        title: 'img500k',
+        tag: '工具',
+        desc: '纯前端图片压缩器：批量、直链、ZIP 解压导入，可自定义目标体积上限，全程浏览器本地处理。',
+        repo: 'https://github.com/DeveloperYe/img500k',
+        url: 'https://developerye.github.io/img500k/',
+        urlLabel: '在线使用',
+      },
+      {
+        title: 'web-ssh',
+        tag: '工具',
+        desc: '单端口 Web SSH：xterm.js 网页终端 + headless /api/exec，AI 与脚本也能直接调用。',
+        repo: 'https://github.com/DeveloperYe/web-ssh',
+      },
+      {
+        title: 'unlock-music',
+        tag: '工具',
+        desc: '音乐解锁工具的静态构建部署，文件在浏览器本地处理，不上传服务器。',
+        repo: 'https://github.com/DeveloperYe/unlock-music',
+        url: 'https://developerye.github.io/unlock-music/',
+        urlLabel: '在线使用',
+      },
+      {
+        title: 'DeveloperYe.github.io',
+        tag: '站点',
+        desc: '就是这个站点：Astro 构建、GitHub Actions 自动部署，带作品集、博客与深色模式。',
+        repo: 'https://github.com/DeveloperYe/DeveloperYe.github.io',
+        url: 'https://developerye.github.io',
+        urlLabel: '访问站点',
+      },
+      {
+        title: 'handwriting-homework-pipeline',
+        tag: 'Agent Skills',
+        desc: '把「答题 → 生成 Word → 转手写稿 zip」串成一条流水线的可复用 Agent Skills。',
+        repo: 'https://github.com/DeveloperYe/handwriting-homework-pipeline',
+      },
+    ],
   },
 ];
+
+const total = groups.reduce((n, g) => n + g.items.length, 0);
 ---
 
 <BaseLayout title="作品集" description="DeveloperYe 的开源项目">
   <section class="container page">
     <h1>作品集</h1>
-    <p class="lede">一些我搭出来、真的能跑的东西。</p>
+    <p class="lede">{total} 个项目，按主题分组。点标题进仓库，能在线跑的直接试。</p>
 
-    <div class="grid">
-      {
-        projects.map((p) => (
-          <article class="card">
-            <span class="tag">{p.tag}</span>
-            <h2>
-              <a href={p.url} target="_blank" rel="noopener">{p.title}</a>
-            </h2>
-            <p>{p.desc}</p>
-            <div class="links">
-              <a href={p.repo} target="_blank" rel="noopener">仓库</a>
-              <a href={p.url} target="_blank" rel="noopener">在线查看</a>
-            </div>
-          </article>
-        ))
-      }
-    </div>
+    {
+      groups.map((group) => (
+        <section class="group">
+          <div class="group-head">
+            <h2>{group.name}</h2>
+            <span class="count">{group.items.length}</span>
+          </div>
+          {group.note && <p class="group-note">{group.note}</p>}
+
+          <div class="grid">
+            {group.items.map((p) => (
+              <article class="card">
+                <span class="tag">{p.tag}</span>
+                <h3>
+                  <a href={p.url ?? p.repo} target="_blank" rel="noopener">{p.title}</a>
+                </h3>
+                <p>{p.desc}</p>
+                <div class="links">
+                  <a href={p.repo} target="_blank" rel="noopener">仓库</a>
+                  {p.url && (
+                    <a href={p.url} target="_blank" rel="noopener">{p.urlLabel ?? '在线查看'}</a>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))
+    }
   </section>
 </BaseLayout>
 
@@ -64,7 +201,43 @@ const projects = [
 
   .lede {
     color: var(--text-secondary);
-    margin: 0 0 32px;
+    margin: 0 0 40px;
+  }
+
+  .group {
+    margin-bottom: 48px;
+  }
+
+  .group:last-child {
+    margin-bottom: 0;
+  }
+
+  .group-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.35rem;
+  }
+
+  .count {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    padding: 1px 9px;
+  }
+
+  .group-note {
+    margin: 0 0 18px;
+    color: var(--text-tertiary);
+    font-size: 0.9rem;
   }
 
   .grid {
@@ -99,16 +272,16 @@ const projects = [
     margin-bottom: 16px;
   }
 
-  h2 {
+  h3 {
     margin: 0 0 8px;
     font-size: 1.1rem;
   }
 
-  h2 a {
+  h3 a {
     color: var(--text);
   }
 
-  h2 a:hover {
+  h3 a:hover {
     color: var(--accent);
   }
 
